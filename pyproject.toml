@@ -1,0 +1,29 @@
+[project]
+name = "themis"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.7",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+exclude = ["output", "*.parquet", "*.csv", "*.json", "*.avro"]
+
+[tool.ruff.lint]
+# Common and useful rules:
+# indentation, unused vars, imports
+select = ["E", "F", "I"]
+
+# Ignore long lines (pandas, numpy, URLs...)
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Imports not at the beginning (normal in notebooks)
+"*.ipynb" = ["E402"]
