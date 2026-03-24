@@ -12,3 +12,24 @@ dependencies = [
     "pip>=26.0.1",
     "seaborn>=0.13.2",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.7",
+]
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+exclude = ["output", "*.parquet", "*.csv", "*.json", "*.avro"]
+
+[tool.ruff.lint]
+# Common and useful rules:
+# indentation, unused vars, imports
+select = ["E", "F", "I"]
+
+# Ignore long lines (pandas, numpy, URLs...)
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Imports not at the beginning (normal in notebooks)
+"*.ipynb" = ["E402"]
