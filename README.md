@@ -7,7 +7,7 @@ Student‑led initiative that investigates how AI systems can better account for
 
 ## ⬇️ Installation
 
-### Requierements:
+### Requirements:
 uv (https://astral.sh/uv)
 
 ```bash
