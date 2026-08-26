@@ -7,6 +7,7 @@
 git clone https://github.com/lusanmanso/themis.git
 cd themis
 uv sync
+source .venv/bin/activate
 ```
 
 ---
