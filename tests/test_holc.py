@@ -2,6 +2,7 @@
 
 import geopandas as gpd
 import pandas as pd
+import pytest
 
 from themis import extract_dominant, load_raw
 from themis.holc import GRADE_MAP
@@ -57,3 +58,16 @@ def test_extract_dominant_drops_ungraded():
 
     assert len(result) == 1
     assert result.iloc[0]["GEOID"] == "11001"
+
+
+def test_extract_dominant_missing_columns():
+    """extract_dominant raises ValueError when required columns are missing."""
+    data = {
+        "GEOID": ["11001"],
+        "pct_tract": [0.5],
+        # "grade" is missing
+    }
+    gdf = gpd.GeoDataFrame(data)
+
+    with pytest.raises(ValueError, match="missing required columns"):
+        extract_dominant(gdf)
