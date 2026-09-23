@@ -26,14 +26,22 @@ _KEEP_COLS = [
 
 
 def load_raw(url: str = HOLC_URL) -> gpd.GeoDataFrame:
+    """Download the HOLC-to-census-tract crosswalk GeoJSON."""
     return gpd.read_file(url)
 
 
+_REQUIRED_COLS = {"GEOID", "grade", "pct_tract"}
+
+
 def extract_dominant(gdf: gpd.GeoDataFrame) -> pd.DataFrame:
+    """One row per GEOID with the highest-coverage HOLC grade.
+
+    Raises ValueError if GEOID, grade, or pct_tract columns are missing.
     """
-    One row per GEOID: the HOLC area with the highest coverage (pct_tract).
-    Drops geometry and ungraded areas (commercial/industrial-only zones).
-    """
+    missing = _REQUIRED_COLS - set(gdf.columns)
+    if missing:
+        raise ValueError(f"Input is missing required columns: {sorted(missing)}")
+
     cols = [c for c in _KEEP_COLS if c in gdf.columns]
     df = gdf[cols].copy()
     df = df[df["grade"].isin(GRADE_MAP)]
